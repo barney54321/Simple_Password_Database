@@ -39,7 +39,15 @@ app.get("/database", (req, res) => {
             res.sendStatus(500);
             return;
         }
-        res.json(rows);
+        //res.json(rows);
+        //var myjson = json(rows);
+        res.write("<h1>People</h1><ol>");
+        for (var i = 0; i < rows.length; i++) {
+            res.write("<li>Username: "+rows[i].username+"<br>Password: "+rows[i].password+"</li>");
+        }
+        res.write("</ol>")
+        res.write('<input type="button" onclick="window.location.href = \'/\';" value="Main Menu"/>')
+        res.end();
     })
 })
 
@@ -122,25 +130,6 @@ app.post("/finish", (req, res) => {
         res.sendFile(path.join(__dirname + "/public/main.html"));
     })
 })
-
-// app.get("/create", (req, res) => {
-//     res.sendFile(path.join(__dirname + "/public/form.html"))
-//     // const connection = mysql.createConnection({
-//     //     host: "localhost",
-//     //     user: "root",
-//     //     password: "password",
-//     //     database: "password_database"
-//     // })
-//     // const queryString = "SELECT * FROM users"
-//     // connection.query(queryString, (err, rows, fields) => {
-//     //     if (err) {
-//     //         console.log("Failed to query for users: " + err);
-//     //         res.sendStatus(500);
-//     //         return;
-//     //     }
-//     //     res.json(rows);
-//     // })
-// })
 
 app.listen(3010, () => {
     console.log("Server currently running on port 3010");
